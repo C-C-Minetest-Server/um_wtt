@@ -29,6 +29,10 @@
 local S = minetest.get_translator("um_wtt")
 local F = minetest.formspec_escape
 
+local MP = minetest.get_modpath("um_wtt")
+local wtt_notify = dofile(MP .. "/notify.lua")
+dofile(MP .. "/craft.lua")
+
 local sound = nil
 if minetest.global_exists("zr_stone") then
     sound = zr_stone.sounds
@@ -106,8 +110,6 @@ minetest.register_node("um_wtt:wtt", {
     end,
 })
 
-local wtt_notify = dofile(minetest.get_modpath("um_wtt") .. "/notify.lua")
-
 minetest.register_on_player_receive_fields(function(player, formname, fields)
     local name = player:get_player_name()
     local balance = unified_money.get_balance_safe(name)
@@ -171,3 +173,4 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         minetest.show_formspec(name, "um_wtt:node_form_prepare", get_form_prepare(balance))
     end
 end)
+
