@@ -1,0 +1,33 @@
+# textdomain: um_wtt
+
+### init.lua ###
+Wire Transfer Terminal=
+Recepient=
+Amount=
+Description=
+Quit=
+Complete the Payment=
+TRANSACTION SUMMARY:=
+Recepient: @1=
+Amount: @1=
+Description: @1=
+Comfirm Transaction=
+Back=
+No descriptions given.=
+Transaction failed=
+Destination or amount invalid.=
+Destination cannot be yourself.=
+Insufficant balance.=
+Invalid amount.=
+Destinatinon @1 does not exist.=
+Transaction done=
+Thank you for choosing the Wire Transfer system=
+
+### notify.lua ###
+Dear @1,=
+@1 has transferred $@2 into your bank account. The description given is:=
+Please check your account balance. If you find any Wire Transfer System bugs, please report them at @1.=
+Yours truly,=
+Wire Transfer System=
+This is an automatically sent message. Do not reply.=
+Received $@1 from @2=

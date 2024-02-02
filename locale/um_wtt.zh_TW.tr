@@ -1,0 +1,33 @@
+# textdomain: um_wtt
+
+### init.lua ###
+Wire Transfer Terminal=電匯終端
+Recepient=收款者
+Amount=金額
+Description=描述
+Quit=退出
+Complete the Payment=完成匯款
+TRANSACTION SUMMARY:=匯款小結：
+Recepient: @1=收款者：@1
+Amount: @1=金額：@1
+Description: @1=描述：@1
+Comfirm Transaction=確定匯款
+Back=返回
+No descriptions given.=沒有描述。
+Transaction failed=匯款失敗
+Destination or amount invalid.=描述或金額無效。
+Destination cannot be yourself.=收款者不得爲自身。
+Insufficant balance.=餘額不足。
+Invalid amount.=金額無效。
+Destinatinon @1 does not exist.=收款者 @1 不存在。
+Transaction done=匯款成功
+Thank you for choosing the Wire Transfer system=感謝選用電匯系統。
+
+### notify.lua ###
+Dear @1,=@1，
+@1 has transferred $@2 into your bank account. The description given is:=@1 已經將 $@2 匯款至閣下的銀行戶口。該匯款的描述爲：
+Please check your account balance. If you find any Wire Transfer System bugs, please report them at @1.=請檢查閣下的銀行餘額。如有發現任何電匯系統的軟體錯誤，請在 @1 回報。
+Yours truly,=以上，
+Wire Transfer System=電匯系統
+This is an automatically sent message. Do not reply.=這是一條自動發送的訊息，請勿回覆。
+Received $@1 from @2=從 @2 收到 $@1
