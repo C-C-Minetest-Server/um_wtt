@@ -31,3 +31,5 @@ Yours truly,=
 Wire Transfer System=
 This is an automatically sent message. Do not reply.=
 Received $@1 from @2=
+You have transferred $@1 into @2's bank account. The description given is:=
+Transferred $@1 to @2=

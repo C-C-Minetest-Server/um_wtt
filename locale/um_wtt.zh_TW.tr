@@ -31,3 +31,5 @@ Yours truly,=以上，
 Wire Transfer System=電匯系統
 This is an automatically sent message. Do not reply.=這是一條自動發送的訊息，請勿回覆。
 Received $@1 from @2=從 @2 收到 $@1
+You have transferred $@1 into @2's bank account. The description given is:=
+Transferred $@1 to @2=

@@ -30,7 +30,7 @@ local S = minetest.get_translator("um_wtt")
 
 local wtt_notify = function() end
 if minetest.get_modpath("mail") then
-    wtt_notify = function(from, to, amount, desc)
+    local function wtt_notify_to_recv(from, to, amount, desc)
         local msg = table.concat({
             S("Dear @1,", to),
             "",
@@ -55,6 +55,38 @@ if minetest.get_modpath("mail") then
             body = msg
         }
         mail.send(mail_packet)
+    end
+
+    local function wtt_notify_to_send(from, to, amount, desc)
+        local msg = table.concat({
+            S("Dear @1,", from),
+            "",
+            S("You have transferred $@1 into @2's bank account. The description given is:", amount, to),
+            "",
+            desc,
+            "",
+            S("Please check your account balance. If you find any Wire Transfer System bugs, please report them at @1.",
+                "https://github.com/C-C-Minetest-Server/um_wtt/issues"),
+            "",
+            S("Yours truly,"),
+            S("Wire Transfer System"),
+            "",
+            "",
+            "*" .. S("This is an automatically sent message. Do not reply.") .. "*",
+        }, "\n")
+
+        local mail_packet = {
+            from = "WTT System",
+            to = from,
+            subject = S("Transferred $@1 to @2", amount, to),
+            body = msg
+        }
+        mail.send(mail_packet)
+    end
+
+    wtt_notify = function(from, to, amount, desc)
+        wtt_notify_to_recv(from, to, amount, desc)
+        wtt_notify_to_send(from, to, amount, desc)
     end
 end
 
