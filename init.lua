@@ -66,9 +66,9 @@ local function get_form_confirm(balance, dest, amount, desc)
         "label[0.5,2.5;" .. F(S("Description: @1", desc)) .. "]",
         "button_exit[0.2,5;1.5,1;quit;" .. F(S("Quit")) .. "]",
         "button[4.7,5;3,1;cnfrm;" .. F(S("Comfirm Transaction")) .. "]",
-        "field[100,100;0,0;dstn;;" .. dest .. "]",
-        "field[100,100;0,0;amnt;;" .. amount .. "]",
-        "field[100,100;0,0;desc;;" .. desc .. "]",
+        "field[100,100;0,0;dstn;;" .. F(dest) .. "]",
+        "field[100,100;0,0;amnt;;" .. F(amount) .. "]",
+        "field[100,100;0,0;desc;;" .. F(desc) .. "]",
     }, "")
 end
 
