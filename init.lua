@@ -26,19 +26,19 @@
     SOFTWARE.
 ]]
 
-local S = minetest.get_translator("um_wtt")
-local F = minetest.formspec_escape
+local S = core.get_translator("um_wtt")
+local F = core.formspec_escape
 
-local MP = minetest.get_modpath("um_wtt")
+local MP = core.get_modpath("um_wtt")
 local wtt_notify = dofile(MP .. "/notify.lua")
 dofile(MP .. "/craft.lua")
 
 local sound = nil
-if minetest.global_exists("zr_stone") then
+if core.global_exists("zr_stone") then
     sound = zr_stone.sounds
-elseif minetest.global_exists("default") then
+elseif core.global_exists("default") then
     sound = default.node_sound_stone_defaults()
-elseif minetest.global_exists("mcl_sounds") then
+elseif core.global_exists("mcl_sounds") then
     sound = mcl_sounds.node_sound_stone_defaults()
 end
 
@@ -84,7 +84,7 @@ local function get_form_done(balance, title, content)
     }, "")
 end
 
-minetest.register_node("um_wtt:wtt", {
+core.register_node("um_wtt:wtt", {
     description = S("Wire Transfer Terminal"),
     tiles = {
         "wtt_top.png", "wtt_top.png",
@@ -101,16 +101,16 @@ minetest.register_node("um_wtt:wtt", {
     is_ground_content = false,
     sounds = sound,
 
-    on_rightclick = function(pos, node, player, itemstack, pointed_thing)
+    on_rightclick = function(_, _, player)
         if not player:is_player() then return end
         local name = player:get_player_name()
         local balance = unified_money.get_balance_safe(name)
 
-        minetest.show_formspec(name, "um_wtt:node_form_prepare", get_form_prepare(balance))
+        core.show_formspec(name, "um_wtt:node_form_prepare", get_form_prepare(balance))
     end,
 })
 
-minetest.register_on_player_receive_fields(function(player, formname, fields)
+core.register_on_player_receive_fields(function(player, formname, fields)
     local name = player:get_player_name()
     local balance = unified_money.get_balance_safe(name)
 
@@ -125,52 +125,52 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         end
 
         if not (dest and dest ~= "" and amount) then
-            minetest.show_formspec(name, "um_wtt:node_form_done",
+            core.show_formspec(name, "um_wtt:node_form_done",
                 get_form_done(balance, S("Transaction failed"), S("Destination or amount invalid.")))
             return
         end
 
         if dest == name then
-            minetest.show_formspec(name, "um_wtt:node_form_done",
+            core.show_formspec(name, "um_wtt:node_form_done",
                 get_form_done(balance, S("Transaction failed"), S("Destination cannot be yourself.")))
             return
         end
 
         if amount > balance then
-            minetest.show_formspec(name, "um_wtt:node_form_done",
+            core.show_formspec(name, "um_wtt:node_form_done",
                 get_form_done(balance, S("Transaction failed"), S("Insufficant balance.")))
             return
         end
 
         if balance < 1 then
-            minetest.show_formspec(name, "um_wtt:node_form_done",
+            core.show_formspec(name, "um_wtt:node_form_done",
                 get_form_done(balance, S("Transaction failed"), S("Invalid amount.")))
             return
         end
 
         if not unified_money.account_exists(dest) then
-            minetest.show_formspec(name, "um_wtt:node_form_done",
+            core.show_formspec(name, "um_wtt:node_form_done",
                 get_form_done(balance, S("Transaction failed"), S("Destinatinon @1 does not exist.", dest)))
             return
         end
 
         if formname == "um_wtt:node_form_prepare" then
-            minetest.show_formspec(name, "um_wtt:node_form_confirm",
+            core.show_formspec(name, "um_wtt:node_form_confirm",
                 get_form_confirm(balance, dest, amount, desc))
         else
             local status, msg = unified_money.transaction(name, dest, amount)
             balance = unified_money.get_balance_safe(name)
             if not status then
-                minetest.show_formspec(name, "um_wtt:node_form_done",
+                core.show_formspec(name, "um_wtt:node_form_done",
                     get_form_done(balance, S("Transaction failed"), msg))
             else
-                minetest.show_formspec(name, "um_wtt:node_form_done",
+                core.show_formspec(name, "um_wtt:node_form_done",
                     get_form_done(balance, S("Transaction done"), S("Thank you for choosing the Wire Transfer system")))
                 wtt_notify(name, dest, amount, desc)
             end
         end
     elseif formname == "um_wtt:node_form_done" and fields.back then
-        minetest.show_formspec(name, "um_wtt:node_form_prepare", get_form_prepare(balance))
+        core.show_formspec(name, "um_wtt:node_form_prepare", get_form_prepare(balance))
     end
 end)
 

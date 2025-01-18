@@ -26,10 +26,10 @@
     SOFTWARE.
 ]]
 
-local S = minetest.get_translator("um_wtt")
+local S = core.get_translator("um_wtt")
 
 local wtt_notify = function() end
-if minetest.get_modpath("mail") then
+if core.get_modpath("mail") then
     local function wtt_notify_to_recv(from, to, amount, desc)
         local msg = table.concat({
             S("Dear @1,", to),
