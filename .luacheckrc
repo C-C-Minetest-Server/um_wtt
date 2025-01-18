@@ -24,6 +24,7 @@ read_globals = {
     "default",
     "mcl_sounds",
     "mail",
+    "echo",
 
     table = {
         fields = {

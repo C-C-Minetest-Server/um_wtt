@@ -29,7 +29,46 @@
 local S = core.get_translator("um_wtt")
 
 local wtt_notify = function() end
-if core.get_modpath("mail") then
+if core.get_modpath("echo") then
+    echo.register_event_type("um_wtt:wtt_sent", {
+        title = S("WTT Sent"),
+        handle_event = function(event)
+            return {
+                title = S("Transferred $@1 to @2", event.wtt_amount, event.wtt_to),
+                description = S("Description: @1", event.wtt_desc),
+                image = "wtt_front_wt.png",
+            }
+        end,
+    })
+
+    echo.register_event_type("um_wtt:wtt_recv", {
+        title = S("WTT Received"),
+        handle_event = function(event)
+            return {
+                title = S("Received $@1 from @2", event.wtt_amount, event.wtt_from),
+                description = S("Description: @1", event.wtt_desc),
+                image = "wtt_front_wt.png",
+            }
+        end,
+    })
+
+    wtt_notify = function(from, to, amount, desc)
+        echo.send_event_to(from, {
+            type = "um_wtt:wtt_sent",
+            wtt_from = from,
+            wtt_to = to,
+            wtt_amount = amount,
+            wtt_desc = desc,
+        })
+        echo.send_event_to(to, {
+            type = "um_wtt:wtt_recv",
+            wtt_from = from,
+            wtt_to = to,
+            wtt_amount = amount,
+            wtt_desc = desc,
+        })
+    end
+elseif core.get_modpath("mail") then
     local function wtt_notify_to_recv(from, to, amount, desc)
         local msg = table.concat({
             S("Dear @1,", to),
